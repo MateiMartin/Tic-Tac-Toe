@@ -76,7 +76,7 @@ h5 {
   align-items: center;
 }
 
-.light{
+.light {
   position: absolute;
   top: 0;
   right: 0;
@@ -86,10 +86,10 @@ h5 {
   color: black;
   font-weight: bold;
   cursor: pointer;
-  
+
 }
 
-.dark{
+.dark {
   position: absolute;
   top: 0;
   right: 0;
@@ -99,5 +99,5 @@ h5 {
   color: white;
   font-weight: bold;
   cursor: pointer;
-  
+
 }
