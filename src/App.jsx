@@ -10,6 +10,10 @@ function Square({ value, onSquareClick, poz, winner }) {
   );
 }
 
+function BColor({ color, state }) {
+  return (<button className={`${color ? `dark` : `light`}`} onClick={() => state(!color)}>{color ? `Dark` : `Light`}</button>);
+}
+
 function calculateWinner(squares) {
   const lines = [[0, 1, 2],
   [3, 4, 5],
@@ -33,6 +37,7 @@ export default function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
   const [isDraw, setIsDraw] = useState(false);
+  const [isLight, setIsLight] = useState(true);
 
   function handleClick(i) {
     if (squares[i] || calculateWinner(squares)) {
@@ -64,7 +69,8 @@ export default function Board() {
 
   return (
 
-    <div className='body'>
+    <div className={`${isLight ? `body-light` : `body-dark`}`}>
+      <BColor color={isLight} state={setIsLight} />
       <div className="game">
         <h5>{status}</h5>
         <div className="board-row">
