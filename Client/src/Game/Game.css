@@ -20,7 +20,7 @@
 
 h5 {
   text-align: center;
-  color: rgb(98, 87, 87);
+  color: rgb(85, 91, 136);
   margin-bottom: 1.5rem;
 }
 
@@ -77,6 +77,7 @@ h5 {
 }
 
 .light {
+  font-size: 30px;
   position: absolute;
   top: 0;
   right: 0;
@@ -97,7 +98,7 @@ h5 {
   height: 10%;
   background-color: #222;
   color: white;
-  font-weight: bold;
+  font-size: 30px;
   cursor: pointer;
 
 }
