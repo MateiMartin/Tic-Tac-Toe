@@ -21,13 +21,12 @@ io.on('connection', (socket) => {
 
 
     socket.on('data', (data) => {
-        socket.broadcast.emit('data', data);
+        io.emit('data', data);
         console.log(data);
     });
 
     socket.on('game', (data) => {
         socket.broadcast.emit('game', data);
-        console.log(data);
     });
 
 });

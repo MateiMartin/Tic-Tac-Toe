@@ -9,18 +9,6 @@ const StartPage = ({ setRoute, route, setSocket, socket }) => {
     const [input, setInput] = useState('');
 
 
-    useEffect(() => {
-
-        const socket = io('http://localhost:3001');
-        setSocket(socket);
-
-        socket.on('connect', () => {
-            console.log(`You connected with id: ${socket.id}`);
-        });
-
-    }, []);
-
-
     function handleOnlineClick() {
 
         socket.emit('data', { name: input, profileNum: profileNumber, id: socket.id })

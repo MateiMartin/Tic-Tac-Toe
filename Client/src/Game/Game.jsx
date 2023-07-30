@@ -41,25 +41,17 @@ export default function Game({ setRoute, route, setSocket, socket }) {
   const [isLight, setIsLight] = useState(true);
 
 
-
   useEffect(() => {
     socket.on('data', (data) => {
       console.log(data);
     });
   }, [socket]);
 
-
-  useEffect(() => {
-    socket.emit('game', { squares: squares, xIsNext: xIsNext, isDraw: isDraw });
-  }, [squares]);
-
-
   useEffect(() => {
     socket.on('game', (data) => {
       setSquares(data.squares);
-      setXIsNext(data.xIsNext);
       setIsDraw(data.isDraw);
-      console.log(data);
+      setXIsNext(data.xIsNext);
     });
   }, [socket]);
 
@@ -76,9 +68,14 @@ export default function Game({ setRoute, route, setSocket, socket }) {
     }
     setSquares(nextSquares);
     setXIsNext(!xIsNext);
+
+    let drawChacker = false
     if (nextSquares.every(square => square !== null)) {
       setIsDraw(true);
+      drawChacker = true
     }
+
+    socket.emit('game', { squares: nextSquares, xIsNext: !xIsNext, isDraw: drawChacker });
   }
 
   const winner = calculateWinner(squares);
@@ -120,6 +117,7 @@ export default function Game({ setRoute, route, setSocket, socket }) {
               setSquares(Array(9).fill(null));
               setIsDraw(false);
               setXIsNext(true);
+              socket.emit('game', { squares: Array(9).fill(null), xIsNext: true, isDraw: false });
             }}>Reset</button>
           )}
         </div>
