@@ -11,6 +11,6 @@ export default function App() {
      )
     else if(route === 'game')
     return (
-        <Game />
+        <Game setRoute={setRoute}/>
     )
 }
