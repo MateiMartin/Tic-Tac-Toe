@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import React from 'react'
 import './Game.css'
+import { io } from "socket.io-client";
 
 function Square({ value, onSquareClick, poz, winner }) {
   return (
@@ -33,11 +34,35 @@ function calculateWinner(squares) {
   return null;
 }
 
-export default function Game() {
+export default function Game({ setRoute, route, setSocket, socket }) {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
   const [isDraw, setIsDraw] = useState(false);
   const [isLight, setIsLight] = useState(true);
+
+
+
+  useEffect(() => {
+    socket.on('data', (data) => {
+      console.log(data);
+    });
+  }, [socket]);
+
+
+  useEffect(() => {
+    socket.emit('game', { squares: squares, xIsNext: xIsNext, isDraw: isDraw });
+  }, [squares]);
+
+
+  useEffect(() => {
+    socket.on('game', (data) => {
+      setSquares(data.squares);
+      setXIsNext(data.xIsNext);
+      setIsDraw(data.isDraw);
+      console.log(data);
+    });
+  }, [socket]);
+
 
   function handleClick(i) {
     if (squares[i] || calculateWinner(squares)) {
