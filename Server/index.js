@@ -44,6 +44,7 @@ io.on('connection', (socket) => {
         for (let i = 0; i < rooms.length; i++) {
             if (io.sockets.adapter.rooms.get(rooms[i].id).size === 1) {
                 socket.join(rooms[i].id);
+                rooms[i].user2Data = data;
                 joined = true;
                 console.log('joined ' + rooms[i].id + ' room');
                 break;
@@ -51,7 +52,7 @@ io.on('connection', (socket) => {
         }
         if (!joined) {
             const newRoomId = generateRandomId();
-            rooms.push({ id: newRoomId, userData: data });
+            rooms.push({ id: newRoomId, user1Data: data });
             socket.join(newRoomId);
             console.log('created ' + newRoomId + ' room');
         }
