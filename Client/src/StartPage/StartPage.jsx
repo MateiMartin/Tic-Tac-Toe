@@ -4,17 +4,23 @@ import './StartPage.css';
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { io } from "socket.io-client";
 
-const StartPage = ({ setRoute, route, setSocket, socket }) => {
+const StartPage = ({ setRoute, route, setSocket, socket, setRoom }) => {
     const [profileNumber, setProfileNumber] = useState(0);
     const [input, setInput] = useState('');
+
 
 
     function handleOnlineClick() {
 
         socket.emit('join-room', { name: input, profileNum: profileNumber, id: socket.id })
-
+        socket.on('room-infio', (data) => {
+            setRoom(data);
+            console.log(data);
+        });
         setRoute('game');
     }
+
+
 
     const handleInputChange = (event) => {
         setInput(event.target.value);

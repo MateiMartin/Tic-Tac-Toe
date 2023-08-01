@@ -39,6 +39,7 @@ export default function Game({ setRoute, route, setSocket, socket }) {
   const [xIsNext, setXIsNext] = useState(true);
   const [isDraw, setIsDraw] = useState(false);
   const [isLight, setIsLight] = useState(true);
+  
 
 
   useEffect(() => {

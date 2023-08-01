@@ -6,12 +6,13 @@ const cors = require('cors');
 
 const app = express();
 const httpServer = http.createServer(app);
+const { instrument } = require("@socket.io/admin-ui");
 const io = new Server(httpServer, {
     cors: {
-        origin: ["http://localhost:5173", 'https://mateimartin.github.io/Tic-Tac-Toe/']
+        origin: ["http://localhost:5173", 'https://mateimartin.github.io/Tic-Tac-Toe', 'https://admin.socket.io']
     }
 });
-
+instrument(io, { auth: false, });
 
 const PORT = process.env.PORT || 3001;
 app.use(cors());
@@ -42,11 +43,12 @@ io.on('connection', (socket) => {
         io.emit('data', data);
         let joined = false;
         for (let i = 0; i < rooms.length; i++) {
-            if (io.sockets.adapter.rooms.get(rooms[i].id).size === 1) {
+            if (io.sockets.adapter.rooms.get(rooms[i].id) && io.sockets.adapter.rooms.get(rooms[i].id).size === 1) {
                 socket.join(rooms[i].id);
                 rooms[i].user2Data = data;
                 joined = true;
                 console.log('joined ' + rooms[i].id + ' room');
+                io.to(rooms[i].id).emit('room-infio', rooms[i]);
                 break;
             }
         }
@@ -66,20 +68,20 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        let roomName = Array.from(socket.rooms)[1];
-        let room = io.sockets.adapter.rooms.get(roomName);
-        if (room) {
-            const socketIdsInRoom = Array.from(chatRoom);
-            socketIdsInRoom.forEach(socketId => {
-                io.sockets.sockets[socketId].leave(roomName)
-                console.log('User left room: ' + roomName);
-            });
-        } else {
-            console.log('Chat room does not exist or is empty');
+
+        for (let i = 0; i < rooms.length; i++) {
+
+            if (rooms[i].user1Data.id === socket.id || rooms[i].user2Data.id === socket.id) {
+                rooms.splice(i, 1);
+                socket.to(Array.from(socket.rooms).at(-1)).emit('user-disconnected');
+                break;
+            }
+
+
         }
-        rooms.slice(rooms.indexOf(roomName), 1);
-        console.log(rooms.length);
     });
+
+
 });
 
 
@@ -87,4 +89,3 @@ io.on('connection', (socket) => {
 httpServer.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
-
