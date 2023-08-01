@@ -11,7 +11,7 @@ const StartPage = ({ setRoute, route, setSocket, socket }) => {
 
     function handleOnlineClick() {
 
-        socket.emit('data', { name: input, profileNum: profileNumber, id: socket.id })
+        socket.emit('join-room', { name: input, profileNum: profileNumber, id: socket.id })
 
         setRoute('game');
     }
