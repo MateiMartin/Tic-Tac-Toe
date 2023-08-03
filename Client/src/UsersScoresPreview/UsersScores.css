@@ -1,0 +1,13 @@
+.players-scores{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    
+}
+
+.players-scores img{
+    width: 150px;
+    height: auto
+}

@@ -17,7 +17,7 @@ const StartPage = ({ setRoute, route, setSocket, socket, setRoom }) => {
             setRoom(data);
             console.log(data);
         });
-        setRoute('game');
+        setRoute('waitPage');
     }
 
 

@@ -7,21 +7,23 @@
   background-color: #fff;
   border: 3.5px solid #999;
   float: left;
-  font-size: 3rem;
+  font-size: 5rem;
   font-weight: bold;
   line-height: 4rem;
-  height: 4rem;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 4rem;
+  width: 6.2rem;
+  height: 6.2rem;
 }
 
 h5 {
   text-align: center;
   color: rgb(85, 91, 136);
   margin-bottom: 1.5rem;
+  margin-left: 25px;
+  font-size: 2.5rem;
 }
 
 
@@ -60,13 +62,14 @@ h5 {
 }
 
 .Again {
+  position: absolute;
   font-weight: bold;
   font-size: 1.5rem;
   width: 5rem;
   height: 3rem;
   background-color: red;
   color: rgb(0, 0, 0);
-  margin-top: 2rem;
+  margin-top: 6rem;
 }
 
 .btn-again {
@@ -101,4 +104,18 @@ h5 {
   font-size: 30px;
   cursor: pointer;
 
+}
+
+.body-dark,.body-light{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.interface{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction:row;
 }
