@@ -31,12 +31,12 @@ const UsersScores = ({ room, winner, isLight }) => {
         <div className="players-scores">
             <div className="player">
                 <img src={`https://api.multiavatar.com/${room.user1Data.profileNum}.svg`} alt="player1" />
-                <h7 style={Color(isLight)}>{room.user1Data.name}</h7>
+                <h6 style={Color(isLight)}>{room.user1Data.name}</h6>
                 <h4 style={Color(isLight)}>Score: {player1Score}</h4>
             </div>
             <div className="player">
                 <img src={`https://api.multiavatar.com/${room.user2Data.profileNum}.svg`} alt="player2" />
-                <h7 style={Color(isLight)}>{room.user2Data.name}</h7>
+                <h6 style={Color(isLight)}>{room.user2Data.name}</h6>
                 <h4 style={Color(isLight)}>Score: {player2Score}</h4>
             </div>
         </div>
