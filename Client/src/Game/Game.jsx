@@ -41,7 +41,6 @@ export default function Game({ setRoute, route, setSocket, socket, room }) {
   const [isLight, setIsLight] = useState(true);
 
 
-
   useEffect(() => {
     socket.on('data', (data) => {
       console.log(data);
@@ -90,14 +89,48 @@ export default function Game({ setRoute, route, setSocket, socket, room }) {
     status = `Next player: ${xIsNext ? "X" : "O"}`;
   }
 
-  return (
+  function isNext() {
+    if (room) {
+      let playerId = socket.id;
+      if (playerId === room.user1Data.id)
+        return 'X'
+      else if (playerId === room.user2Data.id)
+        return 'O'
+    }
+  }
 
+  function nexEvent() {
+    if (!isDraw && !winner) {
+      if (xIsNext && isNext() === 'O')
+        return { pointerEvents: 'none', cursor: 'not-allowed' }
+      else if (xIsNext && isNext() === 'X')
+        return { pointerEvents: 'auto' }
+      else if (!xIsNext && isNext() === 'X')
+        return { pointerEvents: 'none', cursor: 'not-allowed' }
+      else if (!xIsNext && isNext() === 'O')
+        return { pointerEvents: 'auto' }
+    }
+    else
+      return { pointerEvents: 'auto' }
+
+  }
+
+  function Color(isLight) {
+    if (isLight)
+      return { color: 'black' }
+    else
+      return { color: 'white' }
+
+  }
+
+  return (
     <div className={`${isLight ? `body-light` : `body-dark`}`}>
       <BColor color={isLight} state={setIsLight} />
-      <h5>{status}</h5>
-      <div className='interface'>
-        <UsersScores room={room} />
+
+      <div className='interface' style={nexEvent()}>
+        <UsersScores room={room} winner={winner} isLight={isLight} />
         <div className="game">
+          <h5 style={Color(isLight)}>{status}</h5>
           <div className="board-row">
             <Square poz={0} value={squares[0]} onSquareClick={() => handleClick(0)} winner={winner} />
             <Square poz={1} value={squares[1]} onSquareClick={() => handleClick(1)} winner={winner} />

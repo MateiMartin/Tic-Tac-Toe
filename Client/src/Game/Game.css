@@ -20,9 +20,8 @@
 
 h5 {
   text-align: center;
-  color: rgb(85, 91, 136);
   margin-bottom: 1.5rem;
-  margin-left: 25px;
+  margin-left: 17px;
   font-size: 2.5rem;
 }
 
@@ -118,4 +117,5 @@ h5 {
   justify-content: center;
   align-items: center;
   flex-direction:row;
+  gap:10rem;
 }

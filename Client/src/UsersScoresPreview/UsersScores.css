@@ -1,13 +1,22 @@
 .players-scores{
+    margin-top: 5rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 45px;
     
 }
 
 .players-scores img{
     width: 150px;
     height: auto
+}
+
+.player{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
