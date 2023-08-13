@@ -32,7 +32,7 @@ const StartPage = ({ setRoute, route, setSocket, socket, setRoom }) => {
             <div className="profile">
                 <div className="img-arrow">
                     <FiArrowLeft size={40} color="#FFFFFF" style={{ cursor: 'pointer', userSelect: 'none' }} onClick={() => setProfileNumber(profileNumber - 1)} />
-                    <img src={`https://api.multiavatar.com/${profileNumber}.svg`} alt="imge" />
+                    <img src={`https://robohash.org/${profileNumber}`} alt="imge" />
                     <FiArrowRight size={40} color="#FFFFFF" style={{ cursor: 'pointer', userSelect: 'none' }} onClick={() => setProfileNumber(profileNumber + 1)} />
                 </div>
                 <input type="text" placeholder="Name..." value={input} onChange={handleInputChange} />
