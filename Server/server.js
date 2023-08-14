@@ -67,10 +67,10 @@ io.on('connection', (socket) => {
         socket.to(Array.from(socket.rooms).at(-1)).emit('game', data);
     });
 
-    socket.on('chat-message', (message, roomId) => {
+    socket.on('chat-message', (message, roomId, socketId) => {
         console.log(message);
         console.log(roomId);
-        socket.to(roomId).emit('chat-message', message);
+        socket.to(roomId).emit('chat-message', message, socketId);
     });
 
     socket.on('disconnect', () => {

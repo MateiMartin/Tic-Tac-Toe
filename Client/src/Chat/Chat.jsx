@@ -7,9 +7,11 @@ const Chat = ({ socket, room }) => {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-        const handleChatMessage = (receivedMessage) => {
+        const handleChatMessage = (receivedMessage, socketId) => {
             console.log("Received:", receivedMessage);
-            setMessages((prevMessages) => [...prevMessages, <li key={prevMessages.length}>{receivedMessage}</li>]);
+            setMessages((prevMessages) => [...prevMessages, <li key={prevMessages.length}>{
+                socketId === room.user1Data.id ? `${room.user1Data.name}: ` : `${room.user2Data.name}: `
+            }{receivedMessage}</li>]);
         };
 
         socket.on('chat-message', handleChatMessage);
@@ -24,8 +26,10 @@ const Chat = ({ socket, room }) => {
             console.log("Sending:", message);
             e.preventDefault();
             if (message.trim() !== '') {
-                messages.push(<li key={messages.length}>{message.trim()}</li>);
-                socket.emit('chat-message', message, room.id);
+                messages.push(<li key={messages.length}>{
+                    socket.id === room.user1Data.id ? `${room.user1Data.name}(you): ` : `${room.user2Data.name}(you): `
+                }{message.trim()}</li>);
+                socket.emit('chat-message', message, room.id, socket.id);
                 setMessage('');
             }
         }
