@@ -67,6 +67,12 @@ io.on('connection', (socket) => {
         socket.to(Array.from(socket.rooms).at(-1)).emit('game', data);
     });
 
+    socket.on('chat-message', (message, roomId) => {
+        console.log(message);
+        console.log(roomId);
+        socket.to(roomId).emit('chat-message', message);
+    });
+
     socket.on('disconnect', () => {
 
         for (let i = 0; i < rooms.length; i++) {

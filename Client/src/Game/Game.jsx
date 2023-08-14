@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import React from 'react'
 import './Game.css'
 import UsersScores from '../UsersScoresPreview/UsersScores.jsx'
+import Chat from '../Chat/Chat.jsx'
 
 function Square({ value, onSquareClick, poz, winner }) {
   return (
@@ -161,6 +162,7 @@ export default function Game({ setRoute, route, setSocket, socket, room }) {
 
           </div>
         </div>
+        <Chat socket={socket} room={room}/>
       </div>
     </div>
 

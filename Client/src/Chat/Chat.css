@@ -1,0 +1,23 @@
+.chat-container{
+    border-radius: 20px;
+    margin-top: 105px;
+    display: flex;
+    background-color: rgb(138, 135, 131);
+    flex-direction: column;
+    width: 20rem;
+    
+}
+
+ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10rem;
+    height: 4rem;
+}
+
+#message-input{
+    border-radius: 20px;
+    height: 30px;
+    font-size: 20px;
+}
