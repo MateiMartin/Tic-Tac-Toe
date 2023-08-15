@@ -124,3 +124,23 @@ h5 {
 .not-allowed{
   cursor: not-allowed;
 }
+
+#leave-btn {
+  position: absolute; /* Change to "fixed" for element to stick to viewport */
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  background-color: rgb(138, 135, 131);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 20px;
+
+}
+
+#leave-btn:hover {
+  background-color: rgb(85, 83, 81);
+}

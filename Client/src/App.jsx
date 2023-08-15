@@ -8,7 +8,7 @@ import WaitPage from "./WaitPage/WaitPage.jsx";
 export default function App() {
     const [route, setRoute] = useState('startPage');
     const [socket, setSocket] = useState(null);
-    const [room, setRoom] = useState();
+    const [room, setRoom] = useState(null);
 
 
     useEffect(() => {
@@ -30,12 +30,12 @@ export default function App() {
         return (
             <StartPage setRoute={setRoute} route={route} setSocket={setSocket} socket={socket} setRoom={setRoom} />
         )
-    else if(route === 'waitPage')
-            return (
-                <WaitPage setRoute={setRoute} route={route} setSocket={setSocket} socket={socket} room={room} />
-            )
+    else if (route === 'waitPage')
+        return (
+            <WaitPage setRoute={setRoute} route={route} setSocket={setSocket} socket={socket} room={room} />
+        )
     else if (route === 'game')
         return (
-            <Game setRoute={setRoute} route={route} setSocket={setSocket} socket={socket} room={room} />
+            <Game setRoute={setRoute} route={route} setSocket={setSocket} socket={socket} room={room} setRoom={setRoom} />
         )
 }

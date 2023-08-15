@@ -30,13 +30,13 @@ const UsersScores = ({ room, winner, isLight }) => {
     return (
         <div className="players-scores">
             <div className="player">
-                <img src={`https://robohash.org/${room.user1Data.profileNum}`} alt="player1" />
-                <h6 style={Color(isLight)}>{room.user1Data.name}</h6>
+                <img src={`https://robohash.org/${room?.user1Data?.profileNum || 0}`} alt="player1" />
+                <h6 style={Color(isLight)}>{room?.user1Data?.name}</h6>
                 <h4 style={Color(isLight)}>Score: {player1Score}</h4>
             </div>
             <div className="player">
-                <img src={`https://robohash.org/${room.user2Data.profileNum}`} alt="player2" />
-                <h6 style={Color(isLight)}>{room.user2Data.name}</h6>
+                <img src={`https://robohash.org/${room?.user2Data?.profileNum || 0}`} alt="player2" />
+                <h6 style={Color(isLight)}>{room?.user2Data?.name}</h6>
                 <h4 style={Color(isLight)}>Score: {player2Score}</h4>
             </div>
         </div>

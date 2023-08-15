@@ -13,7 +13,7 @@ const StartPage = ({ setRoute, route, setSocket, socket, setRoom }) => {
     function handleOnlineClick() {
 
         socket.emit('join-room', { name: input, profileNum: profileNumber, id: socket.id })
-        socket.on('room-infio', (data) => {
+        socket.on('room-info', (data) => {
             setRoom(data);
             console.log(data);
         });

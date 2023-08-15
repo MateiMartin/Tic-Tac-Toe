@@ -1,6 +1,7 @@
 .chat-container{
-    border-radius: 20px;
-    margin-top: 105px;
+   
+    border-radius: 5px;
+    margin-top: 96px;
     display: flex;
     background-color: rgb(138, 135, 131);
     flex-direction: column;
@@ -8,16 +9,43 @@
     
 }
 
-ul{
+ul {
     list-style-type: none;
+    height: 13rem;
     padding: 0;
     margin: 0;
-    margin-bottom: 10rem;
-    height: 4rem;
+    margin-bottom: 1rem;
+    overflow-y: scroll; /* Always show a scroll bar */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.1); /* For Chrome and Edge */
+}
+
+/* For Chrome and Edge */
+ul::-webkit-scrollbar {
+    width: 8px;
+}
+
+ul::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+ul::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 #message-input{
     border-radius: 20px;
     height: 30px;
     font-size: 20px;
+}
+
+li{
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
+    width: 15rem;
+    font-size: 20px;
+    word-wrap: break-word;
 }

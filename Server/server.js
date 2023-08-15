@@ -48,7 +48,7 @@ io.on('connection', (socket) => {
                 rooms[i].user2Data = data;
                 joined = true;
                 console.log('joined ' + rooms[i].id + ' room');
-                io.to(rooms[i].id).emit('room-infio', rooms[i]);
+                io.to(rooms[i].id).emit('room-info', rooms[i]);
                 break;
             }
         }
@@ -71,6 +71,27 @@ io.on('connection', (socket) => {
         console.log(message);
         console.log(roomId);
         socket.to(roomId).emit('chat-message', message, socketId);
+    });
+
+    socket.on('room-leave', (room) => {
+        // Emit 'user-disconnected' event to all players in the room
+        io.to(room.id).emit('user-disconnected');
+    
+        // Loop through each socket in the room and make them leave
+        const socketsInRoom = io.sockets.adapter.rooms.get(room.id);
+        if (socketsInRoom) {
+            socketsInRoom.forEach((socketId) => {
+                io.sockets.sockets.get(socketId).leave(room.id);
+            });
+        }
+    
+        // Remove the room from the 'rooms' array
+        const roomIndex = rooms.findIndex((r) => r.id === room.id);
+        if (roomIndex !== -1) {
+            rooms.splice(roomIndex, 1);
+        }
+    
+        console.log(rooms);
     });
 
     socket.on('disconnect', () => {

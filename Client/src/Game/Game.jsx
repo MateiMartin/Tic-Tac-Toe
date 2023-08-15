@@ -35,7 +35,7 @@ function calculateWinner(squares) {
   return null;
 }
 
-export default function Game({ setRoute, route, setSocket, socket, room }) {
+export default function Game({ setRoute, route, setSocket, socket, room, setRoom }) {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
   const [isDraw, setIsDraw] = useState(false);
@@ -124,6 +124,22 @@ export default function Game({ setRoute, route, setSocket, socket, room }) {
 
   }
 
+  function onLeavePress() {
+    socket.emit('room-leave', room);
+    setRoute('startPage');
+  }
+
+  socket.on('user-disconnected', () => {
+    console.log('user disconnected');
+    setRoom(null);
+    () => console.log(room);
+    setTimeout(() => {
+      setRoute('startPage');
+    }, 2000);
+
+  })
+
+
   return (
     <div className={`${isLight ? `body-light` : `body-dark`}`}>
       <BColor color={isLight} state={setIsLight} />
@@ -162,8 +178,9 @@ export default function Game({ setRoute, route, setSocket, socket, room }) {
 
           </div>
         </div>
-        <Chat socket={socket} room={room}/>
+        <Chat socket={socket} room={room} />
       </div>
+      <button id="leave-btn" onClick={onLeavePress}>Leave</button>
     </div>
 
 

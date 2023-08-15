@@ -5,7 +5,7 @@ import './WaitPage.css'
 const WaitPage = ({ setRoute, route, setSocket, socket, room }) => {
 
     useEffect(() => {
-        if (room?.user1Data && room?.user2Data)
+        if ( room?.user1Data && room?.user2Data)
             setRoute('game');
     }, [room]);
 
