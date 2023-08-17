@@ -148,11 +148,14 @@ export default function Game({ setRoute, route, setSocket, socket, room, setRoom
 
   socket.on('toReset', (players) => {
     if (players === 2) {
-      setResetCnt(0);
-      setSquares(Array(9).fill(null));
-      setIsDraw(false);
-      setXIsNext(true);
-      socket.emit('game', { squares: Array(9).fill(null), xIsNext: true, isDraw: false });
+      setTimeout(() => {
+        setResetCnt(0);
+        setSquares(Array(9).fill(null));
+        setIsDraw(false);
+        setXIsNext(true);
+        socket.emit('game', { squares: Array(9).fill(null), xIsNext: true, isDraw: false });
+      }, 350);
+
     }
     else {
       setResetCnt(players)
