@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import React from 'react'
 import './Game.css'
-import UsersScores from '../UsersScoresPreview/UsersScores.jsx'
+import UsersScores from '../UsersScores/UsersScores.jsx'
 import Chat from '../Chat/Chat.jsx'
 
 function Square({ value, onSquareClick, poz, winner }) {
@@ -40,6 +40,8 @@ export default function Game({ setRoute, route, setSocket, socket, room, setRoom
   const [xIsNext, setXIsNext] = useState(true);
   const [isDraw, setIsDraw] = useState(false);
   const [isLight, setIsLight] = useState(true);
+  const [resetCnt, setResetCnt] = useState(0);
+  const [isResetBtnActive, setIsResetBtnActive] = useState(false);
 
 
   useEffect(() => {
@@ -55,6 +57,11 @@ export default function Game({ setRoute, route, setSocket, socket, room, setRoom
       setXIsNext(data.xIsNext);
     });
   }, [socket]);
+
+  useEffect(() => {
+    if (isResetBtnActive === true && !document.querySelector('.Again'))
+      setIsResetBtnActive(false);
+  }, [squares])
 
 
   function handleClick(i) {
@@ -139,13 +146,26 @@ export default function Game({ setRoute, route, setSocket, socket, room, setRoom
 
   })
 
+  socket.on('toReset', (players) => {
+    if (players === 2) {
+      setResetCnt(0);
+      setSquares(Array(9).fill(null));
+      setIsDraw(false);
+      setXIsNext(true);
+      socket.emit('game', { squares: Array(9).fill(null), xIsNext: true, isDraw: false });
+    }
+    else {
+      setResetCnt(players)
+    }
+  });
+
 
   return (
     <div className={`${isLight ? `body-light` : `body-dark`}`}>
       <BColor color={isLight} state={setIsLight} />
 
       <div className='interface' >
-        <UsersScores room={room} winner={winner} isLight={isLight} />
+        <UsersScores room={room} winner={winner} isLight={isLight} resetCnt={resetCnt} />
         <div style={nexEvent() === { pointerEvents: 'none' } ? { cursor: 'crosshair' } : { cursor: 'not-allowed' }}>
           <div className="game" style={nexEvent()}>
             <h5 style={Color(isLight)}>{status}</h5>
@@ -168,11 +188,12 @@ export default function Game({ setRoute, route, setSocket, socket, room, setRoom
             <div className='btn-again'>
               {(winner || isDraw) && (
                 <button className='Again' onClick={() => {
-                  setSquares(Array(9).fill(null));
-                  setIsDraw(false);
-                  setXIsNext(true);
-                  socket.emit('game', { squares: Array(9).fill(null), xIsNext: true, isDraw: false });
-                }}>Reset</button>
+                  setResetCnt(resetCnt + 1);
+                  socket.emit('toReset', resetCnt + 1, room);
+                  setIsResetBtnActive(true)
+                }} style={isResetBtnActive ? { pointerEvents: 'none' } : {}}>
+                  {resetCnt === 0 ? 'Reset' : `Reset ${resetCnt}/2`}
+                </button>
               )}
             </div>
 

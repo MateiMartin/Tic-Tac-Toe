@@ -76,7 +76,7 @@ io.on('connection', (socket) => {
     socket.on('room-leave', (room) => {
         // Emit 'user-disconnected' event to all players in the room
         io.to(room.id).emit('user-disconnected');
-    
+
         // Loop through each socket in the room and make them leave
         const socketsInRoom = io.sockets.adapter.rooms.get(room.id);
         if (socketsInRoom) {
@@ -84,15 +84,28 @@ io.on('connection', (socket) => {
                 io.sockets.sockets.get(socketId).leave(room.id);
             });
         }
-    
+
         // Remove the room from the 'rooms' array
         const roomIndex = rooms.findIndex((r) => r.id === room.id);
         if (roomIndex !== -1) {
             rooms.splice(roomIndex, 1);
         }
-    
+
         console.log(rooms);
     });
+
+    let resetCnt = 0;
+    socket.on('toReset', (players, room) => {
+        resetCnt = players;
+        io.to(room.id).emit('toReset', players);
+        if (resetCnt === 2) {
+            resetCnt = 0;
+        }
+
+
+
+    });
+
 
     socket.on('disconnect', () => {
 

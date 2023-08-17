@@ -1,6 +1,8 @@
 .chat-container{
    
     border-radius: 5px;
+    border-bottom-left-radius:  20px;
+    border-bottom-right-radius: 20px;
     margin-top: 96px;
     display: flex;
     background-color: rgb(138, 135, 131);

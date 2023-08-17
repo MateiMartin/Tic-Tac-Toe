@@ -2,14 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import './UsersScores.css'
 
-const UsersScores = ({ room, winner, isLight }) => {
+const UsersScores = ({ room, winner, isLight,resetCnt }) => {
     console.log(room)
     const [player1Score, setPlayer1Score] = useState(0);
     const [player2Score, setPlayer2Score] = useState(0);
     //player1 = X
     //player2 = O
     useEffect(() => {
-        if (winner) {
+        if (winner && resetCnt===0) {
             if (winner[0] === 'X') {
                 setPlayer1Score(player1Score + 1)
             } else {
