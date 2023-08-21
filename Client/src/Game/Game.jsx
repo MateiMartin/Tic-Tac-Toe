@@ -45,6 +45,48 @@ export default function Game({ setRoute, route, setSocket, socket, room, setRoom
 
 
   useEffect(() => {
+    let body = document.querySelector('body');
+
+    let overlay = document.createElement('div');
+
+    overlay.className = 'popup-overlay-leave';
+    overlay.style.display = 'flex';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.flexDirection = 'column';
+    overlay.style.position = 'absolute';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backdropFilter = 'blur(5px)'
+
+    let popup = document.createElement('div');
+    popup.className = 'popup-leave';
+
+    let whatIsPlayerPlayingWith;
+    if (socket.id === room.user1Data.id)
+      whatIsPlayerPlayingWith = 'X'
+    else
+      whatIsPlayerPlayingWith = 'O'
+
+
+    popup.innerHTML = `
+    <h1>Your are playing with ${whatIsPlayerPlayingWith}</h1>
+  `;
+
+    overlay.appendChild(popup);
+
+    body.appendChild(overlay);
+
+    setTimeout(() => {
+      popup.remove();
+      overlay.remove();
+    }, 2000);
+    
+  }, []);
+
+  useEffect(() => {
     socket.on('data', (data) => {
       console.log(data);
     });
@@ -63,6 +105,9 @@ export default function Game({ setRoute, route, setSocket, socket, room, setRoom
       setIsResetBtnActive(false);
   }, [squares])
 
+  useEffect(() => {
+
+  }, []);
 
   function handleClick(i) {
     if (squares[i] || calculateWinner(squares)) {
@@ -139,8 +184,37 @@ export default function Game({ setRoute, route, setSocket, socket, room, setRoom
   socket.on('user-disconnected', () => {
     console.log('user disconnected');
     setRoom(null);
-    () => console.log(room);
+
+    let body = document.querySelector('body');
+
+    let overlay = document.createElement('div');
+
+    overlay.className = 'popup-overlay-leave';
+    overlay.style.display = 'flex';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.flexDirection = 'column';
+    overlay.style.position = 'absolute';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backdropFilter = 'blur(5px)'
+
+    let popup = document.createElement('div');
+    popup.className = 'popup-leave';
+    popup.innerHTML = `
+    <h1>Your opponent has disconnected</h1>
+    <h2>You will be directed to the start page...</h2>
+  `;
+
+    overlay.appendChild(popup);
+
+    body.appendChild(overlay);
+
     setTimeout(() => {
+      popup.remove();
+      overlay.remove();
       setRoute('startPage');
     }, 2000);
 

@@ -75,7 +75,8 @@ io.on('connection', (socket) => {
 
     socket.on('room-leave', (room) => {
         // Emit 'user-disconnected' event to all players in the room
-        io.to(room.id).emit('user-disconnected');
+        // io.to(room.id).emit('user-disconnected');
+        socket.broadcast.emit('user-disconnected');
 
         // Loop through each socket in the room and make them leave
         const socketsInRoom = io.sockets.adapter.rooms.get(room.id);

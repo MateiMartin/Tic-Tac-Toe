@@ -148,3 +148,31 @@ h5 {
 #leave-btn:hover {
   background-color: rgb(85, 83, 81);
 }
+
+.popup-leave{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(223, 223, 223);
+  width: 750px;
+  height: 350px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.popup-leave h1{
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.popup-leave p{
+  font-size: 30px;
+  font-weight: bold;
+}
