@@ -20,6 +20,10 @@ const StartPage = ({ setRoute, route, setSocket, socket, setRoom }) => {
         setRoute('waitPage');
     }
 
+    function handleWithFriendsClick() {
+       setRoute('privateGame')
+    }
+
 
 
     const handleInputChange = (event) => {
@@ -41,7 +45,7 @@ const StartPage = ({ setRoute, route, setSocket, socket, setRoom }) => {
             <div className="game-mod">
                 <div>
                     <button onClick={handleOnlineClick}>Online</button>
-                    <button onClick={() => setRoute('game')}>With Friends</button>
+                    <button onClick={handleWithFriendsClick}>With Friends</button>
                 </div>
             </div>
         </div>

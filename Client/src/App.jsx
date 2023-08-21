@@ -4,6 +4,7 @@ import Game from "./Game/Game.jsx";
 import StartPage from "./StartPage/StartPage.jsx";
 import { io } from "socket.io-client";
 import WaitPage from "./WaitPage/WaitPage.jsx";
+import PrivateGame from "./PrivateGame/PrivateGame.jsx";
 
 export default function App() {
     const [route, setRoute] = useState('startPage');
@@ -33,6 +34,10 @@ export default function App() {
     else if (route === 'waitPage')
         return (
             <WaitPage setRoute={setRoute} route={route} setSocket={setSocket} socket={socket} room={room} />
+        )
+    else if (route === 'privateGame')
+        return (
+            <PrivateGame />
         )
     else if (route === 'game')
         return (
