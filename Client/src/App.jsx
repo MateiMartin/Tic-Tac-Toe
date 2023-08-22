@@ -11,6 +11,8 @@ export default function App() {
     const [socket, setSocket] = useState(null);
     const [room, setRoom] = useState(null);
 
+    const [playerData, setPlayerData] = useState(null);//for private
+
 
     useEffect(() => {
 
@@ -27,9 +29,9 @@ export default function App() {
 
     }, []);
 
-    if (route === 'startPage')
+    if (route === 'startPage') 
         return (
-            <StartPage setRoute={setRoute} route={route} setSocket={setSocket} socket={socket} setRoom={setRoom} />
+            <StartPage setRoute={setRoute} route={route} setSocket={setSocket} socket={socket} setRoom={setRoom} setPlayerData={setPlayerData} />
         )
     else if (route === 'waitPage')
         return (
@@ -37,7 +39,7 @@ export default function App() {
         )
     else if (route === 'privateGame')
         return (
-            <PrivateGame />
+            <PrivateGame socket={socket} setRoute={setRoute} setRoom={setRoom} playerData={playerData} room={room} />
         )
     else if (route === 'game')
         return (

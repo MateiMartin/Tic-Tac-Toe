@@ -7,6 +7,7 @@ const cors = require('cors');
 const app = express();
 const httpServer = http.createServer(app);
 const { instrument } = require("@socket.io/admin-ui");
+const e = require('express');
 const io = new Server(httpServer, {
     cors: {
         origin: ["http://localhost:5173", 'https://mateimartin.github.io/Tic-Tac-Toe', 'https://admin.socket.io']
@@ -66,8 +67,28 @@ io.on('connection', (socket) => {
         console.log(rooms.length);
     });
 
-    //private rooms
-    socket.on('join-room-private', (data) => {
+    socket.on('createPrivateGame', (data) => {
+        const newRoomId = generateRandomId();
+        rooms.push({ id: newRoomId, user1Data: data, private: true });
+        socket.join(newRoomId);
+        io.to(newRoomId).emit('private-room-create', rooms[rooms.length - 1]);
+    });
+
+    socket.on('joinPrivateGame', (input, playerInfo) => {
+        console.log(input);
+        let thisRoom;
+        for (let i = 0; i < rooms.length; i++) {
+            if (rooms[i].id === input && rooms[i].private === true) {
+                rooms[i].user2Data = playerInfo;
+                thisRoom = rooms[i];
+            }
+        }
+        if (thisRoom) {
+            socket.join(input);
+            // console.log(thisRoom)
+            io.to(input).emit('private-room-join', thisRoom);
+        }
+
 
     });
 
@@ -99,6 +120,8 @@ io.on('connection', (socket) => {
         if (roomIndex !== -1) {
             rooms.splice(roomIndex, 1);
         }
+
+        console.log(rooms);
 
     });
 

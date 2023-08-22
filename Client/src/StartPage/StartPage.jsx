@@ -4,10 +4,14 @@ import './StartPage.css';
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { io } from "socket.io-client";
 
-const StartPage = ({ setRoute, route, setSocket, socket, setRoom }) => {
+const StartPage = ({ setRoute, route, setSocket, socket, setRoom, setPlayerData }) => {
     const [profileNumber, setProfileNumber] = useState(0);
     const [input, setInput] = useState('');
 
+    useEffect(() => {
+        setRoom(null);
+        setPlayerData(null);
+    })
 
 
     function handleOnlineClick() {
@@ -21,7 +25,8 @@ const StartPage = ({ setRoute, route, setSocket, socket, setRoom }) => {
     }
 
     function handleWithFriendsClick() {
-       setRoute('privateGame')
+        setPlayerData({ name: input, profileNum: profileNumber, id: socket.id })
+        setRoute('privateGame')
     }
 
 
