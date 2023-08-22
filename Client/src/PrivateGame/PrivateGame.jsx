@@ -47,6 +47,11 @@ const PrivateGame = ({ socket, setRoute, setRoom, playerData, room }) => {
         setRoom(room);
     })
 
+    function onKeyDown(e) {
+        if (e.keyCode === 13) {
+            onJoinClik();
+        }
+    }
 
 
     if (createOrJoin === '')
@@ -62,7 +67,7 @@ const PrivateGame = ({ socket, setRoute, setRoom, playerData, room }) => {
 
             <div className="join-game">
                 <h1>Enter the code:</h1>
-                <input type="text" onChange={handleInput} />
+                <input type="text" onChange={handleInput} placeholder="Enter the code here..." onKeyDown={onKeyDown} />
                 <button onClick={onJoinClik}>Join</button>
             </div>
 
