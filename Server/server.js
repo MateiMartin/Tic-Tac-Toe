@@ -138,15 +138,33 @@ io.on('connection', (socket) => {
 
     });
 
-    socket.on('disconnect', () => {
-        socket.broadcast.emit('user-disconnected');
-        //remove room from rooms array
-        const roomIndex = rooms.findIndex((r) => r.id === Array.from(socket.rooms).at(-1));
-        if (roomIndex !== -1) {
-            rooms.splice(roomIndex, 1);
+    socket.on('disconnecting', () => {
+        const roomIds = Array.from(socket.rooms);
+    
+        // Ensure that there's at least one room (excluding the socket's own ID)
+        if (roomIds.length <= 1) {
+            console.log("Room not found in the rooms array.");
+            return; // No need to continue if the socket is not in any room
         }
-
+    
+        // Find the index of the room in the rooms array
+        const roomIndex = rooms.findIndex((r) => r.id === roomIds.at(-1));
+    
+        if (roomIndex !== -1) {
+            console.log("Room found in the rooms array.")
+            const disconnectedRoom = rooms[roomIndex];
+    
+            // Emit 'user-disconnected' event to other users in the room
+            socket.to(disconnectedRoom.id).emit('user-disconnected');
+    
+            // Remove the disconnected room from the rooms array
+            rooms.splice(roomIndex, 1);
+            console.log(rooms);
+        } else {
+            
+        }
     });
+    
 
 });
 
