@@ -26,7 +26,7 @@ const PrivateGame = ({ socket, setRoute, setRoom, playerData, room }) => {
     }
 
     function createGame() {
-       
+
         socket.emit('createPrivateGame', playerData);
         setCreateOrJoin('create');
 
@@ -34,11 +34,11 @@ const PrivateGame = ({ socket, setRoute, setRoom, playerData, room }) => {
 
     socket.on('private-room-create', (room) => {
         setRoomId(room.id);
-       
+
     });
 
     function joinGame() {
-       
+
         setCreateOrJoin('join');
     }
 
@@ -53,22 +53,22 @@ const PrivateGame = ({ socket, setRoute, setRoom, playerData, room }) => {
         }
     }
 
-    function handleLeave(){
-        if(createOrJoin==="")
+    function handleLeave() {
+        if (createOrJoin === "")
             setRoute('startPage');
-       else if(createOrJoin==="create"){
+        else if (createOrJoin === "create") {
             setCreateOrJoin('');
             setRoom(null);
             setRoomId('');
             socket.emit('room-leave-private', roomId);
-       }
-       else if(createOrJoin==="join"){
+        }
+        else if (createOrJoin === "join") {
             setCreateOrJoin('');
             setRoom(null);
             setInput('');
-        
-     }
-      
+
+        }
+
     }
 
 

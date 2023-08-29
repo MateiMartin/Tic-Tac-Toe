@@ -83,12 +83,12 @@ export default function Game({ setRoute, route, setSocket, socket, room, setRoom
       popup.remove();
       overlay.remove();
     }, 2000);
-    
+
   }, []);
 
   useEffect(() => {
     socket.on('data', (data) => {
-     
+
     });
   }, [socket]);
 
@@ -182,7 +182,7 @@ export default function Game({ setRoute, route, setSocket, socket, room, setRoom
   }
 
   socket.on('user-disconnected', () => {
-    
+
     setRoom(null);
 
     let body = document.querySelector('body');
