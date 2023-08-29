@@ -26,7 +26,7 @@ const PrivateGame = ({ socket, setRoute, setRoom, playerData, room }) => {
     }
 
     function createGame() {
-        console.log(playerData);
+       
         socket.emit('createPrivateGame', playerData);
         setCreateOrJoin('create');
 
@@ -34,11 +34,11 @@ const PrivateGame = ({ socket, setRoute, setRoom, playerData, room }) => {
 
     socket.on('private-room-create', (room) => {
         setRoomId(room.id);
-        console.log(room.id);
+       
     });
 
     function joinGame() {
-        console.log(playerData);
+       
         setCreateOrJoin('join');
     }
 
@@ -66,7 +66,7 @@ const PrivateGame = ({ socket, setRoute, setRoom, playerData, room }) => {
             setCreateOrJoin('');
             setRoom(null);
             setInput('');
-          //  socket.emit('room-leave', room);
+        
      }
       
     }

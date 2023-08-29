@@ -88,7 +88,7 @@ export default function Game({ setRoute, route, setSocket, socket, room, setRoom
 
   useEffect(() => {
     socket.on('data', (data) => {
-      console.log(data);
+     
     });
   }, [socket]);
 
@@ -182,7 +182,7 @@ export default function Game({ setRoute, route, setSocket, socket, room, setRoom
   }
 
   socket.on('user-disconnected', () => {
-    console.log('user disconnected');
+    
     setRoom(null);
 
     let body = document.querySelector('body');

@@ -6,14 +6,13 @@ const cors = require('cors');
 
 const app = express();
 const httpServer = http.createServer(app);
-const { instrument } = require("@socket.io/admin-ui");
 const e = require('express');
 const io = new Server(httpServer, {
     cors: {
-        origin: ["http://localhost:5173", 'https://mateimartin.github.io/Tic-Tac-Toe', 'https://admin.socket.io']
+        origin: ["http://localhost:5173", 'https://mateimartin.github.io/Tic-Tac-Toe']
     }
 });
-instrument(io, { auth: false, });
+
 
 const PORT = process.env.PORT || 3001;
 app.use(cors());
@@ -38,7 +37,6 @@ function generateRandomId() {
 let rooms = [];
 
 io.on('connection', (socket) => {
-    console.log(socket.id);
 
     //public rooms
     socket.on('join-room', (data) => {
@@ -50,7 +48,7 @@ io.on('connection', (socket) => {
                     socket.join(rooms[i].id);
                     rooms[i].user2Data = data;
                     joined = true;
-                    console.log('joined ' + rooms[i].id + ' room');
+                   
                     io.to(rooms[i].id).emit('room-info', rooms[i]);
                     break;
                 }
@@ -60,11 +58,9 @@ io.on('connection', (socket) => {
             const newRoomId = generateRandomId();
             rooms.push({ id: newRoomId, user1Data: data, private: false });
             socket.join(newRoomId);
-            console.log('created ' + newRoomId + ' room');
+           
         }
-        console.log(Array.from(socket.rooms).at(-1));
-        console.log(data);
-        console.log(rooms.length);
+      
     });
 
     socket.on('createPrivateGame', (data) => {
@@ -75,7 +71,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('joinPrivateGame', (input, playerInfo) => {
-        console.log(input);
+      
         let thisRoom;
         for (let i = 0; i < rooms.length; i++) {
             if (rooms[i].id === input && rooms[i].private === true) {
@@ -85,7 +81,7 @@ io.on('connection', (socket) => {
         }
         if (thisRoom) {
             socket.join(input);
-            // console.log(thisRoom)
+           
             io.to(input).emit('private-room-join', thisRoom);
         }
 
@@ -97,15 +93,14 @@ io.on('connection', (socket) => {
     });
 
     socket.on('chat-message', (message, roomId, socketId) => {
-        console.log(message);
-        console.log(roomId);
+     
         socket.to(roomId).emit('chat-message', message, socketId);
     });
 
     socket.on('room-leave', (room) => {
         // Emit 'user-disconnected' event to all players in the room
         // io.to(room.id).emit('user-disconnected');
-        console.log(room)
+      
         socket.to(room.id).emit('user-disconnected');
 
         // Loop through each socket in the room and make them leave
@@ -122,7 +117,7 @@ io.on('connection', (socket) => {
             rooms.splice(roomIndex, 1);
         }
 
-        console.log(rooms);
+     
 
     });
 
@@ -139,15 +134,15 @@ io.on('connection', (socket) => {
 
     });
 
-    socket.on('room-leave-private',(roomId)=>{
-        console.log(roomId)
+    socket.on('room-leave-private', (roomId) => {
+       
         socket.leave(roomId);
-        for(let i=0;i<rooms.length;i++){
-            if(rooms[i].id===roomId){
-                rooms.splice(i,1);
+        for (let i = 0; i < rooms.length; i++) {
+            if (rooms[i].id === roomId) {
+                rooms.splice(i, 1);
             }
         }
-        console.log(rooms)
+       
     })
 
     socket.on('disconnecting', () => {
@@ -155,7 +150,7 @@ io.on('connection', (socket) => {
 
         // Ensure that there's at least one room (excluding the socket's own ID)
         if (roomIds.length <= 1) {
-            console.log("Room not found in the rooms array.");
+           
             return; // No need to continue if the socket is not in any room
         }
 
@@ -163,7 +158,7 @@ io.on('connection', (socket) => {
         const roomIndex = rooms.findIndex((r) => r.id === roomIds.at(-1));
 
         if (roomIndex !== -1) {
-            console.log("Room found in the rooms array.")
+           
             const disconnectedRoom = rooms[roomIndex];
 
             // Emit 'user-disconnected' event to other users in the room
@@ -171,8 +166,8 @@ io.on('connection', (socket) => {
 
             // Remove the disconnected room from the rooms array
             rooms.splice(roomIndex, 1);
-            console.log(rooms);
-        } 
+            
+        }
     });
 
 
@@ -181,5 +176,5 @@ io.on('connection', (socket) => {
 
 
 httpServer.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`{PORT}`);
 });
