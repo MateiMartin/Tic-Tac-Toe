@@ -53,6 +53,24 @@ const PrivateGame = ({ socket, setRoute, setRoom, playerData, room }) => {
         }
     }
 
+    function handleLeave(){
+        if(createOrJoin==="")
+            setRoute('startPage');
+       else if(createOrJoin==="create"){
+            setCreateOrJoin('');
+            setRoom(null);
+            setRoomId('');
+            socket.emit('room-leave-private', roomId);
+       }
+       else if(createOrJoin==="join"){
+            setCreateOrJoin('');
+            setRoom(null);
+            setInput('');
+          //  socket.emit('room-leave', room);
+     }
+      
+    }
+
 
     if (createOrJoin === '')
         return (
@@ -60,6 +78,7 @@ const PrivateGame = ({ socket, setRoute, setRoom, playerData, room }) => {
                 <button onClick={joinGame}>Join Game</button>
                 OR
                 <button onClick={createGame}>Create Game</button>
+                <button id="leave-btn" onClick={handleLeave}>Leave</button>
             </div>
         );
     else if (createOrJoin === 'join')
@@ -69,6 +88,7 @@ const PrivateGame = ({ socket, setRoute, setRoom, playerData, room }) => {
                 <h1>Enter the code:</h1>
                 <input type="text" onChange={handleInput} placeholder="Enter the code here..." onKeyDown={onKeyDown} />
                 <button onClick={onJoinClik}>Join</button>
+                <button id="leave-btn" onClick={handleLeave}>Leave</button>
             </div>
 
 
@@ -80,7 +100,7 @@ const PrivateGame = ({ socket, setRoute, setRoom, playerData, room }) => {
                 <h1>Send this code to your friend:</h1>
                 <h1>" {roomId} "</h1>
                 <p>The game will start as soon as he connects...</p>
-
+                <button id="leave-btn" onClick={handleLeave}>Leave</button>
             </div>
 
         );
