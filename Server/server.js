@@ -9,7 +9,7 @@ const httpServer = http.createServer(app);
 const e = require('express');
 const io = new Server(httpServer, {
     cors: {
-        origin: ["http://localhost:5173", 'https://mateimartin.github.io/Tic-Tac-Toe']
+        origin: ["http://localhost:5173", 'https://mateimartin.github.io/Tic-Tac-Toe','https://mateimartin.github.io']
     }
 });
 
