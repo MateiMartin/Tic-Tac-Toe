@@ -16,9 +16,7 @@ export default function App() {
 
     useEffect(() => {
 
-      const socket = io("https://tic-tac-toe-zoih4.ondigitalocean.app", {
-      withCredentials: true,
-    });
+      const socket = io("https://tic-tac-toe-zoih4.ondigitalocean.app");
         setSocket(socket);
 
         socket.on('connect', () => {
