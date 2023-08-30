@@ -176,5 +176,5 @@ io.on('connection', (socket) => {
 
 
 httpServer.listen(PORT, () => {
-    console.log(`{PORT}`);
+    console.log(`${PORT}`);
 });

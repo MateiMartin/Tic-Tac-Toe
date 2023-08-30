@@ -16,7 +16,7 @@ export default function App() {
 
     useEffect(() => {
 
-        const socket = io('http://localhost:3001');
+        const socket = io('https://tic-tac-toe-zoih4.ondigitalocean.app/');
         setSocket(socket);
 
         socket.on('connect', () => {
@@ -29,7 +29,7 @@ export default function App() {
 
     }, []);
 
-    if (route === 'startPage') 
+    if (route === 'startPage')
         return (
             <StartPage setRoute={setRoute} route={route} setSocket={setSocket} socket={socket} setRoom={setRoom} setPlayerData={setPlayerData} />
         )
