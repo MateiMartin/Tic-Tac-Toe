@@ -15,10 +15,8 @@ export default function App() {
 
 
     useEffect(() => {
-
-      const socket = io("https://tic-tac-toe-zoih4.ondigitalocean.app")
-  
-        setSocket(socket);
+      const socket = io("https://tic-tac-toe-zoih4.ondigitalocean.app");
+       setSocket(socket);
 
         socket.on('connect', () => {
             console.log(`You connected with id: ${socket.id}`);
